@@ -1,0 +1,88 @@
+﻿@model IEnumerable<eProject1.Event>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Event list</h1>
+
+<p>
+    <a href="/Admin/Event/Create">Create New</a>
+</p>
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Attendance
+            </th>
+            <th>
+                Startdate
+            </th>
+            <th>
+                Enddate
+            </th>
+            <th>
+                EventType
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.event_name)
+                </td>
+                <td>
+                    @if(item.number == null)
+                        {
+                            <span>0</span>
+                        }else
+                            {
+                                @Html.DisplayFor(modelItem => item.number)
+                            }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.event_startdate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.event_enddate)
+                </td>
+                <td>
+                    @if(item.event_type == 1)
+                {
+                    <span>Meetings</span>
+                }@if(item.event_type == 2)
+                {
+                    <span>Games</span>
+                }@if(item.event_type == 3){
+                    <span>Competitions</span>
+                }
+                </td>
+                <td>
+                    @if (item.status)
+                    {
+                    <span>Eligible to join</span>
+                    }
+                    else
+                    {
+                        <span>End</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.event_id">Edit Status</a> |
+                    <a asp-action="Delete" asp-route-id="@item.event_id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
